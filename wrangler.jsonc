@@ -4,12 +4,19 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "colorthief-worker",
+	"name": "calore",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-07-05",
+	"compatibility_flags": ["nodejs_compat"],
 	"observability": {
-		"enabled": true
-	}
+		"enabled": true,
+	},
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "551c2553678f4c13a2f60e1e8b2c08c6",
+		},
+	],
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
