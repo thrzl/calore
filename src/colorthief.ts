@@ -1,5 +1,8 @@
 import quantize from '@lokesh.dhakar/quantize';
-import jpeg from 'jpeg-js';
+import decode, { init as initJpegDecode } from '@jsquash/jpeg/decode';
+import MOZJPEG_WASM from './mozjpeg_dec.wasm';
+
+initJpegDecode(MOZJPEG_WASM); // The `WASM_MODULE` variable will need to be sourced by yourself and passed as an ArrayBuffer.
 import type { BufferLike } from 'jpeg-js';
 
 function createPixelArray(pixels: BufferLike, pixelCount: number, quality: number) {
@@ -36,14 +39,14 @@ function validateOptions(options: { colorCount: number; quality: number }) {
 	return { colorCount, quality };
 }
 
-function loadJPEG(jpegData: ArrayBuffer) {
-	return jpeg.decode(jpegData);
+async function loadJPEG(jpegData: ArrayBuffer) {
+	return await decode(jpegData);
 }
 
 export async function getPalette(img: ArrayBuffer, colorCount = 10, quality = 10) {
 	const options = validateOptions({ colorCount, quality });
 
-	const imgData = loadJPEG(img);
+	const imgData = await loadJPEG(img);
 	const pixelCount = imgData.width * imgData.height;
 	const pixelArray = createPixelArray(imgData.data, pixelCount, options.quality);
 

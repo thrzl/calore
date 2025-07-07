@@ -16,6 +16,7 @@
 		"wrangler": "^4.23.0"
 	},
 	"dependencies": {
+		"@jsquash/jpeg": "^1.6.0",
 		"@lokesh.dhakar/quantize": "^1.4.0",
 		"jpeg-js": "^0.4.4"
 	}
