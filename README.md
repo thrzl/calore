@@ -2,7 +2,7 @@
 
 service to calculate spotify album art color palettes and cache them using cloudflare workers and KV!
 
-uses a modified version of colorthief (in src/colorthief.ts) under the hood. this modified version uses jpeg-js under the hood instead of sharp so that it can support cloudflare workers.
+uses a modified version of colorthief (in [src/colorthief.ts](src/colorthief.ts)) under the hood. this modified version uses [jpeg-js](https://github.com/jpeg-js/jpeg-js) under the hood instead of sharp so that it can support cloudflare workers.
 
 ## how to use
 
