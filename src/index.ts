@@ -1,4 +1,4 @@
-import { getPalette } from './colorthief';
+import { getPalette } from 'cf-colorthief';
 
 async function validateRequest(url: string): Promise<{ imageURL: string; colorCount: number; imageSlug: string } | { error: string }> {
 	const requestURL = new URL(url);
