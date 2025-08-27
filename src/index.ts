@@ -17,7 +17,7 @@ async function validateRequest(url: string): Promise<{ imageURL: string; colorCo
 			const mbidMatch = imageUrl.pathname.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
 			if (imageUrl.hostname === 'coverartarchive.org' && mbidMatch) {
 				const mbid = mbidMatch[0];
-				return { imageURL: `https://coverartarchive.org/release/${mbid}/front`, imageSlug: mbid, colorCount };
+				return { imageURL: `https://coverartarchive.org/release/${mbid}/front-500`, imageSlug: mbid, colorCount };
 			}
 			return { error: 'invalid album image url' };
 		}
