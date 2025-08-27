@@ -2,29 +2,35 @@ import { getPalette } from 'cf-colorthief';
 
 async function validateRequest(url: string): Promise<{ imageURL: string; colorCount: number; imageSlug: string } | { error: string }> {
 	const requestURL = new URL(url);
-	const imageURL = requestURL.searchParams.get('image');
+	const rawImageUrl = requestURL.searchParams.get('image');
 	const colorCount = parseInt(requestURL.searchParams.get('count') || '4');
 
-	if (!imageURL) return { error: 'missing image url. specify with ?image=' };
-
-	try {
-		if (new URL(imageURL).hostname !== 'i.scdn.co') {
-			return { error: 'invalid spotify album image url' };
-		}
-	} catch {
-		return { error: 'invalid spotify album image url' };
-	}
+	if (!rawImageUrl) return { error: 'missing image url. specify with ?image=' };
 
 	if (Number.isNaN(colorCount) || colorCount < 1 || colorCount > 10) {
 		return { error: 'invalid color count specified.' };
 	}
 
-	const match = imageURL.match(/[\w\d]{40}/);
+	try {
+		const imageUrl = new URL(rawImageUrl);
+		if (imageUrl.hostname !== 'i.scdn.co') {
+			const mbidMatch = imageUrl.pathname.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
+			if (imageUrl.hostname === 'coverartarchive.org' && mbidMatch) {
+				const mbid = mbidMatch[0];
+				return { imageURL: `https://coverartarchive.org/release/${mbid}/front`, imageSlug: mbid, colorCount };
+			}
+			return { error: 'invalid album image url' };
+		}
+	} catch {
+		return { error: 'invalid album image url' };
+	}
+
+	const match = rawImageUrl.match(/[\w\d]{40}/);
 	if (!match) {
-		return { error: 'invalid spotify album image url' };
+		return { error: 'invalid album image url' };
 	}
 	const imageSlug = match[0];
-	return { imageURL, colorCount, imageSlug };
+	return { imageURL: rawImageUrl, colorCount, imageSlug };
 }
 
 function buildWorkersCacheRequest(url: string): Request {
