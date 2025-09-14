@@ -13,7 +13,14 @@ async function validateRequest(url: string): Promise<{ imageURL: string; colorCo
 
 	try {
 		const imageUrl = new URL(rawImageUrl);
-		if (imageUrl.hostname !== 'i.scdn.co') {
+		if (imageUrl.hostname === 'is1-ssl.mzstatic.com') {
+			const newUrl = imageUrl.pathname.replace('100x100bb', '500x500bb').replace('60x60bb', '500x500bb');
+			return {
+				imageURL: newUrl,
+				imageSlug: imageUrl.pathname.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0] || imageUrl.pathname,
+				colorCount,
+			};
+		} else if (imageUrl.hostname !== 'i.scdn.co') {
 			const mbidMatch = imageUrl.pathname.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
 			if (imageUrl.hostname === 'coverartarchive.org' && mbidMatch) {
 				const mbid = mbidMatch[0];
