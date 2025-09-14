@@ -14,7 +14,7 @@ async function validateRequest(url: string): Promise<{ imageURL: string; colorCo
 	try {
 		const imageUrl = new URL(rawImageUrl);
 		if (imageUrl.hostname === 'is1-ssl.mzstatic.com') {
-			const newUrl = rawImageUrl.replace('100x100bb', '500x500bb').replace('60x60bb', '500x500bb');
+			const newUrl = rawImageUrl.replace('100x100bb', '300x300bb').replace('60x60bb', '300x300bb');
 			return {
 				imageURL: newUrl,
 				imageSlug: imageUrl.pathname.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0] || imageUrl.pathname,
