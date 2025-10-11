@@ -97,7 +97,7 @@ export default {
 
 		const buffer = await imageResp.arrayBuffer();
 
-		const palette = await getPalette(buffer, colorCount, 1);
+		const palette = (await getPalette(buffer, colorCount, 1)) || [];
 		ctx.waitUntil(env.KV.put(cacheKey, JSON.stringify(palette), { expirationTtl: 2592000 }));
 		ctx.waitUntil(
 			caches.default.put(buildWorkersCacheRequest(`https://calore.thrzl.xyz/cache/${cacheKey}`), new Response(JSON.stringify(palette))),
