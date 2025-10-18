@@ -6,7 +6,7 @@
       "dependencies": {
         "@jsquash/jpeg": "^1.6.0",
         "@lokesh.dhakar/quantize": "^1.4.0",
-        "cf-colorthief": "^0.0.3",
+        "cf-colorthief": "^0.0.4",
       },
       "devDependencies": {
         "@cloudflare/vitest-pool-workers": "^0.8.53",
@@ -227,7 +227,7 @@
 
     "cac": ["cac@6.7.14", "", {}, "sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ=="],
 
-    "cf-colorthief": ["cf-colorthief@0.0.3", "", { "dependencies": { "@jsquash/avif": "^2.1.1", "@jsquash/jpeg": "^1.6.0", "@jsquash/png": "^3.1.1", "@jsquash/webp": "^1.5.0", "@lokesh.dhakar/quantize": "^1.4.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-/w9RBcBvQXWHi0Vs6omIBGhabFlPWt0+SDcsSafhKKxFuoKf6pf+p2/+sosn/CsVwdY3LVKEcJcdH2osxaKWHw=="],
+    "cf-colorthief": ["cf-colorthief@0.0.4", "", { "dependencies": { "@jsquash/avif": "^2.1.1", "@jsquash/jpeg": "^1.6.0", "@jsquash/png": "^3.1.1", "@jsquash/webp": "^1.5.0", "@lokesh.dhakar/quantize": "^1.4.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-D3cMl2K573Ik/mmpVIm4PNkUqsqgewQGSSKVIGEVbVGVUNpix/drDKkOGv3eeR7TpnLE6r1I3aUwXYecz3xxYQ=="],
 
     "chai": ["chai@5.2.0", "", { "dependencies": { "assertion-error": "^2.0.1", "check-error": "^2.1.1", "deep-eql": "^5.0.1", "loupe": "^3.1.0", "pathval": "^2.0.0" } }, "sha512-mCuXncKXk5iCLhfhwTc0izo0gtEmpz5CtG2y8GiOINBlMVS6v8TMRc5TaLWKS6692m9+dVVfzgeVxR5UxWHTYw=="],
 

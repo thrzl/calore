@@ -63,7 +63,7 @@ export default {
 			'Content-Type': 'application/json',
 		};
 
-		const cacheKey = `${colorCount}:${imageSlug}`;
+		const cacheKey = `${new URL(imageURL).host}:${imageSlug}:${colorCount}`;
 		let cacheHit = await workersCacheGet(cacheKey);
 		console.log(`local cache: ${cacheHit}`);
 		if (!cacheHit) {
@@ -97,7 +97,7 @@ export default {
 
 		const buffer = await imageResp.arrayBuffer();
 
-		const palette = (await getPalette(buffer, colorCount, 1)) || [];
+		const palette = (await getPalette(buffer, colorCount, 1, undefined, true)) || [];
 		ctx.waitUntil(env.KV.put(cacheKey, JSON.stringify(palette), { expirationTtl: 2592000 }));
 		ctx.waitUntil(
 			caches.default.put(buildWorkersCacheRequest(`https://calore.thrzl.xyz/cache/${cacheKey}`), new Response(JSON.stringify(palette))),

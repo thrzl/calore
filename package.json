@@ -18,6 +18,6 @@
 	"dependencies": {
 		"@jsquash/jpeg": "^1.6.0",
 		"@lokesh.dhakar/quantize": "^1.4.0",
-		"cf-colorthief": "^0.0.3"
+		"cf-colorthief": "^0.0.4"
 	}
 }
