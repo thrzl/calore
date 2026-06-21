@@ -13,6 +13,7 @@ async function validateRequest(url: string): Promise<{ imageURL: string; colorCo
 
 	try {
 		const imageUrl = new URL(rawImageUrl);
+		const otherAllowed = ["i.scdn.co"]
 		if (imageUrl.hostname === 'is1-ssl.mzstatic.com') {
 			const newUrl = rawImageUrl.replace('100x100bb', '300x300bb').replace('60x60bb', '300x300bb');
 			return {
@@ -20,24 +21,29 @@ async function validateRequest(url: string): Promise<{ imageURL: string; colorCo
 				imageSlug: imageUrl.pathname.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/)?.[0] || imageUrl.pathname,
 				colorCount,
 			};
-		} else if (imageUrl.hostname !== 'i.scdn.co') {
+		} else if (imageUrl.hostname === 'coverartarchive.org') {
 			const mbidMatch = imageUrl.pathname.match(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/);
-			if (imageUrl.hostname === 'coverartarchive.org' && mbidMatch) {
+			if (mbidMatch) {
 				const mbid = mbidMatch[0];
 				return { imageURL: `https://coverartarchive.org/release/${mbid}/front-500`, imageSlug: mbid, colorCount };
 			}
+			return { error: 'invalid album image url' };
+		} else if (imageUrl.hostname === "cdn-images.dzcdn.net") {
+			const dimensions = imageUrl.pathname.match(/\d{3,4}x\d{3,4}/);
+			if (dimensions) {
+				const newUrl = rawImageUrl.replace(dimensions[0], '500x500');
+				return { imageURL: newUrl, imageSlug: imageUrl.pathname, colorCount };
+			} else {
+				return { error: 'invalid album image url' };
+			}
+		} else if (otherAllowed.includes(imageUrl.hostname)) {
+			return { imageURL: rawImageUrl, imageSlug: imageUrl.pathname, colorCount };
+		} else {
 			return { error: 'invalid album image url' };
 		}
 	} catch {
 		return { error: 'invalid album image url' };
 	}
-
-	const match = rawImageUrl.match(/[\w\d]{40}/);
-	if (!match) {
-		return { error: 'invalid album image url' };
-	}
-	const imageSlug = match[0];
-	return { imageURL: rawImageUrl, colorCount, imageSlug };
 }
 
 function buildWorkersCacheRequest(url: string): Request {
