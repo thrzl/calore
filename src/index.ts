@@ -51,7 +51,7 @@ function buildWorkersCacheRequest(url: string): Request {
 }
 
 async function workersCacheGet(key: string): Promise<[number, number, number][] | null> {
-	const res = await caches.default.match(buildWorkersCacheRequest(`https://calore.thrzl.xyz/cache/${key}`));
+	const res = await caches.default.match(buildWorkersCacheRequest(`https://calore.twofortyeight.net/cache/${key}`));
 	console.log(`workersCacheGet: ${res?.status}`);
 	return res ? res.json() : null;
 }
@@ -80,7 +80,7 @@ export default {
 			if (cacheHit)
 				ctx.waitUntil(
 					caches.default.put(
-						buildWorkersCacheRequest(`https://calore.thrzl.xyz/cache/${cacheKey}`),
+						buildWorkersCacheRequest(`https://calore.twofortyeight.net/cache/${cacheKey}`),
 						new Response(JSON.stringify(cacheHit)),
 					),
 				);
@@ -106,7 +106,7 @@ export default {
 		const palette = (await getPalette(buffer, colorCount, 1, undefined, true)) || [];
 		ctx.waitUntil(env.KV.put(cacheKey, JSON.stringify(palette), { expirationTtl: 2592000 }));
 		ctx.waitUntil(
-			caches.default.put(buildWorkersCacheRequest(`https://calore.thrzl.xyz/cache/${cacheKey}`), new Response(JSON.stringify(palette))),
+			caches.default.put(buildWorkersCacheRequest(`https://calore.twofortyeight.net/cache/${cacheKey}`), new Response(JSON.stringify(palette))),
 		);
 
 		return new Response(JSON.stringify({ palette }), { headers });
